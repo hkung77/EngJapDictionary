@@ -17,10 +17,13 @@ public class DescriptionActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String title = intent.getStringExtra("DESCRIPTION_TITLE");
         String description = intent.getStringExtra("DESCRIPTION");
+        String jatitle = intent.getStringExtra("JA_TITLE");
 
         TextView descriptionTitle = findViewById(R.id.searchedTitle);
         TextView descriptionView = findViewById(R.id.description);
+        TextView jaTitle = findViewById(R.id.searchedTitleJA);
         descriptionTitle.setText(title);
+        jaTitle.setText(jatitle);
         descriptionView.setText(description);
     }
 
