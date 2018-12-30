@@ -3,7 +3,6 @@ package com.maple.gaijin.engjapdictionary;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -18,6 +17,8 @@ import cz.msebera.android.httpclient.Header;
 public class SearchMainActivity extends AppCompatActivity {
 
     String description;
+    String searchedTitleJA;
+    String jaDescription;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,11 +33,11 @@ public class SearchMainActivity extends AppCompatActivity {
         if (text.length() > 0) {
             // Make API call to get definition of searched word.
             DictionaryAPI request = new DictionaryAPI();
-            request.get(text, null, new JsonHttpResponseHandler() {
+            request.get(text.toLowerCase(), null, new JsonHttpResponseHandler() {
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                     // If the response is JSONObject instead of expected JSONArray
-//                    Log.d("FUCKER", "---------------- this is response : " + response.toString());
+                    // Log.d("API Response", "---------------- this is response : " + response.toString());
                     try {
                         JSONObject serverResp = new JSONObject(response.toString());
                         JSONArray tucArray = serverResp.getJSONArray("tuc");
@@ -44,9 +45,9 @@ public class SearchMainActivity extends AppCompatActivity {
                         if (tucArray.length() > 0) {
                             JSONObject tuc = (JSONObject) tucArray.get(0);
 
-                        Log.d("FUCKER tuc", "---------------- this is response : " + tuc.toString());
+                            // Log.d("translation data", "---------------- this is response : " + tuc.toString());
                             JSONObject meaning = (JSONObject) tuc.getJSONArray("meanings").get(0);
-                            Log.d("FUCKER meaning", "---------------- this is response : " + meaning.toString());
+                            // Log.d("definition meaning", "---------------- this is response : " + meaning.toString());
                             description = meaning.getString("text");
 
                             navigateDescriptionScreen();
